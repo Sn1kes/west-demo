@@ -6,14 +6,17 @@
                             "$ErrorActionPreference='Stop';" \
                             "try { & '..\\.venv\\Scripts\\Activate.ps1';"
 #define STRPWSLEND "; exit $LASTEXITCODE } catch { Write-Error $_; exit 1 } }\""
+#define OPTION_INSTALL "[\033[1mI\033[0mnstall]"
+#define OPTION_UPDATE "[\033[1mU\033[0pdate]"
+#define OPTION_QUIT "[\033[1mQ\033[0muit]"
 const char *strSuccess = "\nSuccess!\n\n";
 
 inline void print_menu(void)
 {
     assert(printf("Choose:\n"
-                "1. [\033[1mI\033[0mnstall]\n"
-                "2. [\033[1mU\033[0pdate]\n"
-                "3. [\033[1mQ\033[0muit]\n"));
+                "1. " OPTION_INSTALL "\n"
+                "2. " OPTION_UPDATE "\n"
+                "3. " OPTION_QUIT "\n"));
 }
 
 DWORD exec_commandline(LPTSTR strCommandLine)
@@ -60,7 +63,7 @@ main_loop_start:
                     case 'i':
                     case '1':
                     {
-                        assert(printf("Selected [\033[1mI\033[0mnstall]\n"));
+                        assert(printf("Selected " OPTION_INSTALL "\n"));
 
                         TCHAR strCommandLinePrereq[] = TEXT("winget install Kitware.CMake Ninja-build.Ninja oss-winget.gperf python Git.Git oss-winget.dtc wget 7zip.7zip");
                         if (exec_commandline(strCommandLinePrereq))
@@ -83,7 +86,7 @@ main_loop_start:
                     case 'u':
                     case '2':
                     {
-                        assert(printf("Selected [\033[1mU\033[0pdate]\n"));
+                        assert(printf("Selected " OPTION_UPDATE "\n"));
                         TCHAR strCommandLine[] = STRPWSLBEGIN TEXT("west update") STRPWSLEND;
                         if (exec_commandline(strCommandLine))
                             goto main_end;
@@ -97,7 +100,7 @@ main_loop_start:
                     case 'q':
                     case '3':
                     {
-                        assert(printf("Selected [\033[1mQ\033[0muit]\n"));
+                        assert(printf("Selected " OPTION_QUIT "\n"));
                         goto main_end;
                     }
                     break;
