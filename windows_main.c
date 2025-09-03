@@ -11,8 +11,8 @@ const char *strSuccess = "\nSuccess!\n\n";
 inline void print_menu(void)
 {
     assert(printf("Choose:\n"
-                "1. [\033[1mI\033[0mnstall workspace]\n"
-                "2. [\033[1mD\033[0mownload]\n"
+                "1. [\033[1mI\033[0mnstall]\n"
+                "2. [\033[1mU\033[0pdate]\n"
                 "3. [\033[1mQ\033[0muit]\n"));
 }
 
@@ -60,22 +60,18 @@ main_loop_start:
                     case 'i':
                     case '1':
                     {
-                        assert(printf("Selected [\033[1mI\033[0mnstall workspace]\n"));
+                        assert(printf("Selected [\033[1mI\033[0mnstall]\n"));
 
-                        TCHAR strCommandLine_1[] = TEXT("winget install Kitware.CMake Ninja-build.Ninja oss-winget.gperf python Git.Git oss-winget.dtc wget 7zip.7zip");
-                        if (exec_commandline(strCommandLine_1))
+                        TCHAR strCommandLinePrereq[] = TEXT("winget install Kitware.CMake Ninja-build.Ninja oss-winget.gperf python Git.Git oss-winget.dtc wget 7zip.7zip");
+                        if (exec_commandline(strCommandLinePrereq))
                             goto main_end;
 
-                        TCHAR strCommandLine_2[] = TEXT("python -m venv ..\\.venv");
-                        if (exec_commandline(strCommandLine_2))
+                        TCHAR strCommandLineEnv[] = TEXT("python -m venv ..\\.venv");
+                        if (exec_commandline(strCommandLineEnv))
                             goto main_end;
 
-                        TCHAR strCommandLine_3[] = STRPWSLBEGIN TEXT("pip install west") STRPWSLEND;
-                        if (exec_commandline(strCommandLine_3))
-                            goto main_end;
-
-                        TCHAR strCommandLine_4[] = STRPWSLBEGIN TEXT("west init -l .") STRPWSLEND;
-                        if (exec_commandline(strCommandLine_4))
+                        TCHAR strCommandLineInstall[] = STRPWSLBEGIN TEXT("pip install west; west init -l .") STRPWSLEND;
+                        if (exec_commandline(strCommandLineInstall))
                             goto main_end;
 
                         assert(printf(strSuccess));
@@ -83,11 +79,11 @@ main_loop_start:
                         goto main_loop_start;
                     }
                     break;
-                    case 'D':
-                    case 'd':
+                    case 'U':
+                    case 'u':
                     case '2':
                     {
-                        assert(printf("Selected [\033[1mD\033[0mownload]\n"));
+                        assert(printf("Selected [\033[1mU\033[0pdate]\n"));
                         TCHAR strCommandLine[] = STRPWSLBEGIN TEXT("west update") STRPWSLEND;
                         if (exec_commandline(strCommandLine))
                             goto main_end;
