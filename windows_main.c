@@ -7,7 +7,7 @@
                             "try { & '..\\.venv\\Scripts\\Activate.ps1';"
 #define STRPWSLEND "; exit $LASTEXITCODE } catch { Write-Error $_; exit 1 } }\""
 #define OPTION_INSTALL "[\033[1mI\033[0mnstall]"
-#define OPTION_UPDATE "[\033[1mU\033[0pdate]"
+#define OPTION_UPDATE "[\033[1mU\033[0mpdate]"
 #define OPTION_QUIT "[\033[1mQ\033[0muit]"
 const char *strSuccess = "\nSuccess!\n\n";
 
